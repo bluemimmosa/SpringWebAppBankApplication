@@ -1,12 +1,13 @@
 com\ismt\springlogin\dao\DataBaseVariable.class
-com\ismt\springlogin\dao\AccountDao.class
 com\ismt\springlogin\model\Login.class
-com\ismt\springlogin\dao\UserDao.class
 com\ismt\springlogin\controller\DbConnection.class
-com\ismt\springlogin\dao\UserDaoImplementation.class
 com\ismt\springlogin\model\Account.class
+com\ismt\springlogin\controller\LoginController.class
+com\ismt\springlogin\dao\AccountDao.class
+com\ismt\springlogin\dao\UserDao.class
+com\ismt\springlogin\dao\UserDaoImplementation.class
 com\ismt\springlogin\dao\AccountDaoImplementation.class
 com\ismt\springlogin\model\User.class
-com\ismt\springlogin\controller\LoginController.class
+com\ismt\springlogin\model\FundTransferFormHelper.class
 com\ismt\springlogin\controller\AccountController.class
 com\ismt\springlogin\controller\RegistrationController.class

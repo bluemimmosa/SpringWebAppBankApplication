@@ -7,7 +7,7 @@ package com.ismt.springlogin.controller;
 
 import com.ismt.springlogin.dao.AccountDao;
 import com.ismt.springlogin.model.Account;
-import com.ismt.springlogin.model.User;
+import com.ismt.springlogin.model.FundTransferFormHelper;
 import java.util.ArrayList;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -25,6 +25,7 @@ public class AccountController {
     @Autowired
     AccountDao acc;
     public static String user;
+    //private static FundTransferFormHelper fundTransferFormHelper = new FundTransferFormHelper();
     
     @RequestMapping(value = "/createnewaccount", method = RequestMethod.GET)
     public ModelAndView showCreateNewAccount() {
@@ -133,6 +134,10 @@ public class AccountController {
         ModelAndView mav = new ModelAndView("withdraw");
         mav.addObject("name", user);
         Account ac = acc.search(account.getAccountNumber());
+        if(ac == null){
+            mav.addObject("message", "Account doesnt exist.");
+            return mav;
+        }
         double status = acc.withdraw(ac, account.getBalance());
         if(status == -2){
            mav.addObject("message","Insufficient Balance");
@@ -143,5 +148,38 @@ public class AccountController {
         }
                 
         return mav;
-}
+    }
+    
+    @RequestMapping(value = "/fundtransfer", method = RequestMethod.GET)
+    public ModelAndView showFundTransferForm() {
+        ModelAndView mav = new ModelAndView("fundtransfer");
+        mav.addObject("name",user);
+        mav.addObject("fundtransferhelper", new FundTransferFormHelper());
+        //mav.addObject("trgtaccount", new Account());
+        mav.addObject("title", "BANKING SYSTEM : FUND TRANSFER");
+        return mav;
+    }
+    
+    @RequestMapping(value="/processfundtransfer", method=RequestMethod.POST)
+    public ModelAndView processWithdraw(@ModelAttribute ("fundtransferhelper") FundTransferFormHelper fundTransferFormHelper){
+        ModelAndView mav = new ModelAndView("fundtransfer");
+        mav.addObject("name", user);
+        Account srcAc = acc.search(fundTransferFormHelper.getSrcAccountNumber());
+        Account trgtAc = acc.search(fundTransferFormHelper.getTrgtAccountNumber());
+        if(srcAc == null){
+            mav.addObject("message","Source Account doesnt exist.");
+            return mav;
+        }
+        if(trgtAc == null){
+            mav.addObject("message","Target Account doesnt exist.");
+            return mav;
+        }
+        if(!acc.FundTransfer(srcAc, trgtAc, fundTransferFormHelper.getBalance())){
+            mav.addObject("message", "Fund Transfer failed due to insufficeint balance in source account.");
+        }else{
+            mav.addObject("message", "Fund transferres Successfully.");
+        }
+        return mav;
+    }
+    
 }

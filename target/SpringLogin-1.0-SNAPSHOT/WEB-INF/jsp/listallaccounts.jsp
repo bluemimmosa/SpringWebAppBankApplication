@@ -69,13 +69,13 @@
                     <a href="deleteaccount"><i class="fa fa-fw fa-paper-plane-o"></i> Close Account</a>
                 </li>
                 <li>
-                    <a href="faq"><i class="fa fa-fw fa fa-question-circle"></i> Withdraw</a>
+                    <a href="withdraw"><i class="fa fa-fw fa fa-question-circle"></i> Withdraw</a>
                 </li>
                 <li>
                     <a href="faq"><i class="fa fa-fw fa fa-question-circle"></i> Deposit</a>
                 </li>
                 <li>
-                    <a href="faq"><i class="fa fa-fw fa fa-question-circle"></i> Fund Transfer</a>
+                    <a href="fundtransfer"><i class="fa fa-fw fa fa-question-circle"></i> Fund Transfer</a>
                 </li>
                 <li>
                     <a href="searchbyname"><i class="fa fa-fw fa fa-question-circle"></i> Search By Name</a>
