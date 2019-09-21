@@ -13,4 +13,11 @@
         <servlet-name>dispatcher</servlet-name>
         <url-pattern>/</url-pattern>
     </servlet-mapping>
+    
+    <session-management>
+        <concurrency-control expired-url="/sessionExpired.jsp" />
+    </session-management>
+    <session-config>
+        <session-timeout>2</session-timeout>
+    </session-config>
 </web-app>

@@ -8,7 +8,9 @@ package com.ismt.springlogin.controller;
 import com.ismt.springlogin.dao.AccountDao;
 import com.ismt.springlogin.model.Account;
 import com.ismt.springlogin.model.FundTransferFormHelper;
+import com.ismt.springlogin.model.Login;
 import java.util.ArrayList;
+import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -28,11 +30,18 @@ public class AccountController {
     //private static FundTransferFormHelper fundTransferFormHelper = new FundTransferFormHelper();
     
     @RequestMapping(value = "/createnewaccount", method = RequestMethod.GET)
-    public ModelAndView showCreateNewAccount() {
+    public ModelAndView showCreateNewAccount(HttpSession session) {
+        if(session.getAttribute("uname")== null){
+            ModelAndView mav = new ModelAndView("dashboard");
+            mav.addObject("title", "BANKING SYSTEM : OPEN NEW ACCOUNT");
+            mav.addObject("message", "Login is required to do that.");
+            return mav;
+        }
         ModelAndView mav = new ModelAndView("createnewaccount");
         mav.addObject("account", new Account());
         mav.addObject("name",user);
         mav.addObject("title", "BANKING SYSTEM : OPEN NEW ACCOUNT");
+        
         return mav;
     }
     
@@ -55,7 +64,13 @@ public class AccountController {
     }
     
     @RequestMapping(value = "/deleteaccount", method = RequestMethod.GET)
-    public ModelAndView showDeleteAccount() {
+    public ModelAndView showDeleteAccount(HttpSession session) {
+        if(session.getAttribute("uname")== null){
+            ModelAndView mav = new ModelAndView("dashboard");
+            mav.addObject("title", "BANKING SYSTEM : CLOSE ACCOUNT");
+            mav.addObject("message", "Login is required to do that.");
+            return mav;
+        }
         ModelAndView mav = new ModelAndView("deleteaccount");
         mav.addObject("name",user);
         mav.addObject("account", new Account());
@@ -90,7 +105,13 @@ public class AccountController {
     
     
     @RequestMapping(value = "/listallaccounts", method = RequestMethod.GET)
-    public ModelAndView showListAllAccounts() {
+    public ModelAndView showListAllAccounts(HttpSession session) {
+        if(session.getAttribute("uname")== null){
+            ModelAndView mav = new ModelAndView("dashboard");
+            mav.addObject("title", "BANKING SYSTEM : LIST ALL ACCOUNTS");
+            mav.addObject("message", "Login is required to do that.");
+            return mav;
+        }
         ArrayList<Account> aList = acc.listAll();
         ModelAndView mav = new ModelAndView("listallaccounts");
         mav.addObject("aList",aList);
@@ -100,12 +121,18 @@ public class AccountController {
     }
     
     @RequestMapping(value = "/searchbyname", method = RequestMethod.GET)
-    public ModelAndView showSearchByName() {
+    public ModelAndView showSearchByName(HttpSession session) {
+        if(session.getAttribute("uname")== null){
+            ModelAndView mav = new ModelAndView("dashboard");
+            mav.addObject("title", "BANKING SYSTEM : SEARCH ACCOUNT BY NAME");
+            mav.addObject("message", "Login is required to do that.");
+            return mav;
+        }
         ArrayList<Account> aList = acc.listAll();
         ModelAndView mav = new ModelAndView("searchbyname");
         mav.addObject("account", new Account());
         mav.addObject("name",user);
-        mav.addObject("title", "BANKING SYSTEM : SEARCH BY NAME");
+        mav.addObject("title", "BANKING SYSTEM : SEARCH ACCOUNT BY NAME");
         return mav;
     }
     
@@ -121,7 +148,13 @@ public class AccountController {
     }
     
     @RequestMapping(value = "/withdraw", method = RequestMethod.GET)
-    public ModelAndView showWithdrawForm() {
+    public ModelAndView showWithdrawForm(HttpSession session) {
+        if(session.getAttribute("uname")== null){
+            ModelAndView mav = new ModelAndView("dashboard");
+            mav.addObject("title", "BANKING SYSTEM : WITHDRAW AMOUNT");
+            mav.addObject("message", "Login is required to do that.");
+            return mav;
+        }
         ModelAndView mav = new ModelAndView("withdraw");
         mav.addObject("name",user);
         mav.addObject("account", new Account());
@@ -151,7 +184,13 @@ public class AccountController {
     }
     
     @RequestMapping(value = "/fundtransfer", method = RequestMethod.GET)
-    public ModelAndView showFundTransferForm() {
+    public ModelAndView showFundTransferForm(HttpSession session) {
+        if(session.getAttribute("uname")== null){
+            ModelAndView mav = new ModelAndView("dashboard");
+            mav.addObject("title", "BANKING SYSTEM : FUND TRANSFER");
+            mav.addObject("message", "Login is required to do that.");
+            return mav;
+        }
         ModelAndView mav = new ModelAndView("fundtransfer");
         mav.addObject("name",user);
         mav.addObject("fundtransferhelper", new FundTransferFormHelper());
@@ -182,4 +221,19 @@ public class AccountController {
         return mav;
     }
     
+    
+    @RequestMapping(value = "/logout", method = RequestMethod.GET)
+    public ModelAndView logout(HttpSession session) {
+        if(session.getAttribute("uname")== null){
+            ModelAndView mav = new ModelAndView("dashboard");
+            mav.addObject("title", "BANKING SYSTEM : LOGOUT");
+            mav.addObject("message", "You are not logged into system before logging out.");
+            return mav;
+        }
+        session.invalidate();
+//        session.removeAttribute("uname");
+        ModelAndView mav = new ModelAndView("login");
+        mav.addObject("login", new Login());
+        return mav;
+    }
 }

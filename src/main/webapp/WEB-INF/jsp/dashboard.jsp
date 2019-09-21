@@ -47,12 +47,12 @@
                 </a>
             </li>            
             <li class="dropdown">
-                <a href="#" class="dropdown-toggle" data-toggle="dropdown">${name}<b class="fa fa-angle-down"></b></a>
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown">${sessionScope.uname}<b class="fa fa-angle-down"></b></a>
                 <ul class="dropdown-menu">
 <!--                    <li><a href="#"><i class="fa fa-fw fa-user"></i> Edit Profile</a></li>
                     <li><a href="#"><i class="fa fa-fw fa-cog"></i> Change Password</a></li>
                     <li class="divider"></li>-->
-                    <li><a href="/SpringLogin/login"><i class="fa fa-fw fa-power-off"></i> Logout</a></li>
+                    <li><a href="logout"><i class="fa fa-fw fa-power-off"></i> Logout</a></li>
                 </ul>
             </li>
         </ul>
@@ -90,7 +90,8 @@
             <!-- Page Heading -->
             <div class="row" id="main" >
                 <div class="col-sm-12 col-md-12 well" id="content">
-                    <h1>Welcome ${name} !</h1>
+                    <h1>Welcome ${sessionScope.uname} !</h1>
+                    <h2>${message}</h2>
                 </div>
             </div>
             <!-- /.row -->

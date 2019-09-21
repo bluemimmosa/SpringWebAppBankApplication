@@ -6,11 +6,10 @@
 package com.ismt.springlogin.controller;
 
 import com.ismt.springlogin.dao.UserDao;
-import com.ismt.springlogin.dao.UserDaoImplementation;
 import com.ismt.springlogin.model.Login;
 import com.ismt.springlogin.model.User;
+import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -43,14 +42,17 @@ public class LoginController {
         return mav;
     }
     
+    
+    
     @RequestMapping(value = "/loginProcess", method = RequestMethod.POST)
-    public ModelAndView loginProcess(@ModelAttribute Login login) {
+    public ModelAndView loginProcess(@ModelAttribute Login login, HttpSession session) {
         user = userService.verfiyUser(login);
         if (user != null) {
             mav = new ModelAndView("dashboard");
             mav.addObject("name", user.getName());
             AccountController.user = user.getName();
             mav.addObject("title", "BANKING SYSTEM : DASHBOARD");
+            session.setAttribute("uname", user.getName());
         } else {
             mav = new ModelAndView("login");
             mav.addObject("message", "Username or Password is wrong!!");
